@@ -780,10 +780,14 @@ JVMCI::CodeInstallResult CodeInstaller::install(JVMCICompiler* compiler,
       JVMCI_THROW_MSG_(IllegalArgumentException, "InstalledCode object must be a HotSpotNmethod when installing a HotSpotCompiledNmethod", JVMCI::ok);
     }
 
-    // Enforce that compiled methods have an nmethod barrier.
+    // Do not enforce that compiled methods have an nmethod barrier.
+    // This breaks the Nalim project
+    // https://github.com/apangin/nalim/issues/10
+    /*
     if (_nmethod_entry_patch_offset == -1) {
       JVMCI_THROW_MSG_(IllegalArgumentException, "nmethod entry barrier is missing", JVMCI::ok);
     }
+    */
 
     JVMCIObject mirror = installed_code;
     nmethod* nm = nullptr; // nm is an out parameter of register_method
